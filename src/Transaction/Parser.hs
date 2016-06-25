@@ -1,13 +1,21 @@
-module Transaction.Parser (parseMovement) where
+module Transaction.Parser (parseMovements) where
 import Text.ParserCombinators.Parsec
 
 -- Get the Identity monad from here:
 
-movement = endBy line eol
-line = sepBy (accString >> parseAcc) (char ',')
-parseAcc = many (noneOf " \n")
+account = endBy movements eol
 
-accString = "Account"
+movements = do
+    string "Account "
+    char '['
+    content <- sepBy movement (char ',')
+    char ']'
+    return content
+
+movement = do
+    tipo <- string "Income" <|> string "Payment"
+    valor <- string " R$ " >> (many (noneOf " ,]"))
+    return (tipo, valor)
 
 eol =   try (string "\n\r")
     <|> try (string "\r\n")
@@ -15,7 +23,9 @@ eol =   try (string "\n\r")
     <|> string "\r"
     <?> "end of line"
 
-parseMovement :: String -> Either ParseError [[String]]
-parseMovement input = parse movement "(unknown)" input
+parseMovements :: String -> [[(String, String)]]
+parseMovements input = fromEither $ parse account "(unknown)" input
 
-Account [Payment R$ 450.0,Income R$ 100.0,Payment R$ 1000.0,Income R$ 2000.0]
+fromEither :: Either a b -> b
+fromEither (Right b) = b
+fromEither (Left a) = error ""

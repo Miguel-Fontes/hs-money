@@ -15,8 +15,10 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Transaction.Transaction
-                     , Transaction.Parser
+  exposed-modules:     Transactions.Transaction
+                     , Transactions.Parser
+                     , Transactions.Money
+                     , Transactions.Account
                      , Persist.Persist
   build-depends:       base >= 4.7 && < 5
                      , parsec

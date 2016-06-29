@@ -1,4 +1,4 @@
-import qualified Transaction.Tests as T
+import qualified Transactions.Tests as T
 
 main :: IO ()
 main = do

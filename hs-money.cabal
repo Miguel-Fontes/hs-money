@@ -1,6 +1,6 @@
 name:                hs-money
 version:             0.1.0.0
-synopsis:            Initial project template from stack
+synopsis:            Aplicação para gestão financeira
 description:         Please see README.md
 homepage:            https://github.com/Miguel-Fontes/hs-money#readme
 license:             BSD3

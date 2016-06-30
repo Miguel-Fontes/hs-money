@@ -15,11 +15,11 @@ instance Eq Transaction where
 
 instance Serializable Transaction where
     serialize = serializeTransaction
-    parse = undefined
+    parse     = undefined
 
 serializeTransaction :: Transaction -> String
 serializeTransaction (Payment x) = "Payment " ++ show x
-serializeTransaction (Income x) = "Income " ++ show x
+serializeTransaction (Income x)  = "Income "  ++ show x
 
 
 

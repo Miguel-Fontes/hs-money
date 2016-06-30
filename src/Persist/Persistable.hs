@@ -1,18 +1,20 @@
 module Persist.Persistable where
 
 import Persist.Serializable
+import Persist.Database
 
 class (Serializable a) => Persistable a where
-    query :: a -> IO a
-    query _ = do
-        db <- readFile "myDB.db"
-        return (parse db)
+    query  :: (Database d) => d -> a -> IO a
+    query  = queryDB
 
-    save :: a -> IO()
-    save = writeFile "myDB.db" . serialize
+    save   :: (Database d) => d -> a -> IO()
+    save   = saveDB
 
-    update :: a -> IO()
-    update = undefined
+    update :: (Database d) => d -> a -> IO()
+    update = updateDB
 
-    delete :: a -> IO()
-    delete = undefined
+    delete :: (Database d) => d -> a -> IO()
+    delete = deleteDB
+
+    get    :: (Database d) => d -> a -> IO a
+    get    = getDB

@@ -26,7 +26,7 @@ emptyAccount = Account []
 -- A função 'parseAccount' está no módulo Transaction.Parser para isolar o código PARSEC
 instance Serializable Account where
     serialize = serializeAccount
-    parse = (readAccount . concat . parseAccount) -- Concat, já que estamos trabalhando só com uma conta. Remover futuramente.
+    parse     = (readAccount . concat . parseAccount) -- Concat, já que estamos trabalhando só com uma conta. Remover futuramente.
 
 serializeAccount :: Account -> String
 serializeAccount (Account ts) = (("Account " ++) . (++"\n") . concat . L.intersperse ",") $ foldr step [] ts
@@ -34,7 +34,7 @@ serializeAccount (Account ts) = (("Account " ++) . (++"\n") . concat . L.intersp
 
 readTransaction :: (String, String) -> Transaction
 readTransaction (t, v)
-    | t == "Income" = Income $ Money (read v :: Float)
+    | t == "Income"  = Income  $ Money (read v :: Float)
     | t == "Payment" = Payment $ Money (read v :: Float)
 
 readAccount :: [(String, String)] -> Account

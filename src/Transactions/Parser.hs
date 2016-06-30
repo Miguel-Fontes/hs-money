@@ -9,7 +9,7 @@ transactions = do
     return content
 
 parseTransaction = do
-    tipo <- string "Income" <|> string "Payment"
+    tipo  <- string "Income" <|> string "Payment"
     valor <- string " " >> (many (noneOf " ,\n"))
     return (tipo, valor)
 

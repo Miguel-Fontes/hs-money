@@ -21,6 +21,8 @@ library
                      , Transactions.Account
                      , Persist.Persistable
                      , Persist.Serializable
+                     , Persist.Database
+                     , Persist.FileDB
   build-depends:       base >= 4.7 && < 5
                      , parsec
   default-language:    Haskell2010

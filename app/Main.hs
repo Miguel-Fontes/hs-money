@@ -1,7 +1,6 @@
 module Main where
 
-import Transaction.Transaction
-import Persist.Persist
+import Transactions.Account
 
 main = do
     return ()

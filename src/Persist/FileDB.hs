@@ -1,9 +1,10 @@
-module Persist.FileDB (connect) where
+module Persist.FileDB (connect, FileDB(FileDBConnector, FileDB)) where
 
 import Persist.Serializable
 import Persist.Database
+import Persist.Config
 
-data FileDB = FileDB String
+data FileDB = FileDB String | FileDBConnector
 
 getName (FileDB name) = name
 
@@ -13,9 +14,10 @@ instance Database FileDB where
     saveDB   = save
     updateDB = update
     deleteDB = delete
+    connectDB = connect
 
-connect :: String -> FileDB
-connect nome = FileDB nome
+connect :: Config -> FileDB
+connect config = FileDB (name config)
 
 query :: (Serializable a) => FileDB -> a -> IO a
 query db _ = do

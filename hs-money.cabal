@@ -24,6 +24,7 @@ library
                      , Persist.Database
                      , Persist.FileDB
   build-depends:       base >= 4.7 && < 5
+                     , aeson
                      , parsec
   default-language:    Haskell2010
 

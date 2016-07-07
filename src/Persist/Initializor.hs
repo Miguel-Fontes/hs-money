@@ -15,13 +15,13 @@ instance Show Connector where
     show (Connector d) = show d
 
 instance Database Connector where
-    connectDB (Connector d) c = Connector $ connectDB d c
-    queryDB   (Connector d) a = queryDB     d a
-    getDB     (Connector d) a = getDB       d a
-    saveDB    (Connector d) a = saveDB      d a
-    updateDB  (Connector d) a = updateDB    d a
-    deleteDB  (Connector d) a = deleteDB    d a
-    infoDB    (Connector d)   = infoDB        d
+    connectDB (Connector d) cfg = Connector $ connectDB d cfg
+    queryDB   (Connector d) a   = queryDB     d a
+    getDB     (Connector d) a   = getDB       d a
+    saveDB    (Connector d) a   = saveDB      d a
+    updateDB  (Connector d) a   = updateDB    d a
+    deleteDB  (Connector d) a   = deleteDB    d a
+    infoDB    (Connector d)     = infoDB        d
 
 initializeDB :: IO Connector
 initializeDB = do

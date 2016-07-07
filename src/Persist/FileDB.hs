@@ -4,7 +4,7 @@ import Persist.Serializable
 import Persist.Database
 import Persist.Config
 
-data FileDB = FileDBConn String | Disconnected
+data FileDB = FileDBConn String | Disconnected deriving (Show)
 
 getName (FileDBConn name) = name
 
@@ -15,6 +15,10 @@ instance Database FileDB where
     saveDB    = save
     updateDB  = update
     deleteDB  = delete
+    infoDB    = info
+
+info :: FileDB -> String
+info _ = "FileDB"
 
 connect :: FileDB -> Config -> FileDB
 connect _ cfg = FileDBConn (name cfg)

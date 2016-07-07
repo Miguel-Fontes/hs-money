@@ -1,26 +1,26 @@
-module Persist.FileDB (connect, FileDB(FileDBConnector, FileDB)) where
+module Persist.FileDB where
 
 import Persist.Serializable
 import Persist.Database
 import Persist.Config
 
-data FileDB = FileDB String | FileDBConnector
+data FileDB = FileDBConn String | Disconnected
 
-getName (FileDB name) = name
+getName (FileDBConn name) = name
 
 instance Database FileDB where
-    queryDB  = query
-    getDB    = get
-    saveDB   = save
-    updateDB = update
-    deleteDB = delete
     connectDB = connect
+    queryDB   = query
+    getDB     = get
+    saveDB    = save
+    updateDB  = update
+    deleteDB  = delete
 
-connect :: Config -> FileDB
-connect config = FileDB (name config)
+connect :: FileDB -> Config -> FileDB
+connect _ cfg = FileDBConn (name cfg)
 
 query :: (Serializable a) => FileDB -> a -> IO a
-query db _ = do
+query (db) _ = do
     db <- readFile (getName db)
     return (parse db)
 
@@ -35,4 +35,3 @@ update _ = undefined
 
 delete :: (Serializable a) => FileDB -> a -> IO()
 delete _ = undefined
-

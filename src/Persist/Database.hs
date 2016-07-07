@@ -9,4 +9,5 @@ class Database d where
     saveDB    :: (Serializable a) => d -> a -> IO ()
     updateDB  :: (Serializable a) => d -> a -> IO ()
     deleteDB  :: (Serializable a) => d -> a -> IO ()
-    connectDB :: Config -> d
+    connectDB :: d -> Config -> d
+

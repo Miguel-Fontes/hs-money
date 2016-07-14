@@ -9,5 +9,7 @@ import Persist.Initializor
 
 main = do
     conn <- initializeDB
-    save conn ( Account [Income 1000] )
+    acc <- (addIncome 1000 . addPayment 500 . addPayment 200) <$> query conn EmptyAccount
+    print acc
+    save conn ( acc )
     return ()

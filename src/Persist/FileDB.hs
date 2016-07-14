@@ -24,9 +24,9 @@ connect :: FileDB -> Config -> FileDB
 connect _ cfg = FileDBConn (name cfg)
 
 query :: (Serializable a) => FileDB -> a -> IO a
-query (db) _ = do
+query db a = do
     db <- readFile (getName db)
-    return (parse db)
+    return (parse a db)
 
 get :: (Serializable a) => FileDB -> a -> IO a
 get _ = undefined

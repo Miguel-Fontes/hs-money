@@ -8,7 +8,7 @@ import Transactions.Parser
 
 import qualified Data.List as L
 
-newtype Account = Account [Transaction] deriving (Show, Eq)
+data Account = Account [Transaction] | EmptyAccount deriving (Show, Eq)
 
 -- Instance de persistable. Possibilita persistir os dados da conta
 instance Persistable Account
@@ -19,14 +19,11 @@ saldo (Account xs) = foldl step (Money 0) xs
                            Payment p -> acc - p
                            Income i -> i + acc
 
-emptyAccount :: Account
-emptyAccount = Account []
-
 -- Serialização.
 -- A função 'parseAccount' está no módulo Transaction.Parser para isolar o código PARSEC
 instance Serializable Account where
     serialize = serializeAccount
-    parse     = (readAccount . concat . parseAccount) -- Concat, já que estamos trabalhando só com uma conta. Remover futuramente.
+    parse     = parser -- Concat, já que estamos trabalhando só com uma conta. Remover futuramente.
 
 serializeAccount :: Account -> String
 serializeAccount (Account ts) = (("Account " ++) . (++"\n") . concat . L.intersperse ",") $ foldr step [] ts
@@ -46,3 +43,6 @@ addIncome m (Account xs) = Account (Income m : xs)
 
 addPayment :: Money -> Account -> Account
 addPayment p (Account xs) = Account (Payment p : xs)
+
+parser :: Account -> String -> Account
+parser _ = (readAccount . concat . parseAccount)

@@ -5,11 +5,12 @@ module Persist.Initializor where
 import Persist.Database
 import Persist.Config
 import qualified Persist.FileDB as F
-import qualified Persist.FDB as D
 
 data Connector = forall d. (Database d, Show d) => Connector d
 
-dbs = [Connector F.Disconnected, Connector D.Disconnected]
+-- A cada novo DB, será necessário adicionar um novo item nessa lista.
+-- Posso refatorar?
+dbs = [Connector F.Disconnected]
 
 instance Show Connector where
     show (Connector d) = show d

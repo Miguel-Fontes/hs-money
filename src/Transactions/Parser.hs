@@ -19,7 +19,7 @@ eol =   try (string "\n\r")
     <|> string "\r"
     <?> "end of line"
 
-parseAccount:: String -> [[(String, String)]]
+parseAccount :: String -> [[(String, String)]]
 parseAccount input = fromEither $ parse account "(unknown)" input
 
 fromEither :: Either a b -> b
